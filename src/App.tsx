@@ -1,9 +1,7 @@
+import { Spreadsheet } from "./containers/Spreadsheet"
+
 function App() {
-  return (
-    <h2 className="text-3xl font-bold underline">
-      Hello world!
-    </h2>
-  )
+  return <Spreadsheet rows={10} columns={10} />
 }
 
 export default App
