@@ -1,5 +1,6 @@
 import { getArr } from "../../services/getArr"
 import { Row } from "../../components/Row"
+import { Cell } from "../../components/Cell";
 
 type SpreadsheetProps = {
 	rows: number;
@@ -18,22 +19,22 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 			<table>
 				<thead>
 					<Row>
-						{columnsArr.map(column => (
-							<td className="cell font-bold">
-								{column}
-							</td>
-						))}
+						{columnsArr.map(column =>
+							<Cell className="cell font-bold" key={column}>
+								{column as string}
+							</Cell>
+						)}
 					</Row>
 				</thead>
 
 				<tbody>
 					{getArr(rows).map(row => (
 						<Row row={row as number} key={row}>
-							{columnsArr.map(column => (
-								<td className="p-1 cell">
-									{column} / {row}
-								</td>
-							))}
+							{columnsArr.map(column =>
+								<Cell className="p-1 cell" key={column}>
+									{`${column} / ${row}`}
+								</Cell>
+							)}
 						</Row>
 					))}
 				</tbody>
