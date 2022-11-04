@@ -1,0 +1,15 @@
+import { RowProps } from "./types"
+
+export const Row: React.FC<RowProps> = ({ children, row }) => {
+	return (
+		<tr>
+			<td className={`cell ${row && "font-bold"}`}>
+				{row ?? null}
+			</td>
+
+			<>
+				{children}
+			</>
+		</tr>
+	)
+}

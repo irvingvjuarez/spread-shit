@@ -7,3 +7,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cell {
+	@apply border-2 min-w-[90px] border-black text-center;
+}
