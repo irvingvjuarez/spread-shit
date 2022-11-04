@@ -1,4 +1,4 @@
-export type GridContext = {
+export type GridContent = {
 	[key: string]: string
 }
 
