@@ -1,17 +1,8 @@
-import { useContext, useState } from "react"
-import { GridContext } from "../../contexts/GridContext"
+import { useCell } from "../../hooks/useCell"
 import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
-	const gridState = useContext(GridContext)
-	const [editMode, setEditMode] = useState(false)
-	const toggleEditMode = () => setEditMode(prev => !prev)
-	const handleBlur = () => {
-		toggleEditMode()
-		if (id) {
-			console.log(gridState)
-		}
-	}
+	const { editMode, handleBlur, toggleEditMode } = useCell(id)
 
 	if (editMode) return (
 		<td>
