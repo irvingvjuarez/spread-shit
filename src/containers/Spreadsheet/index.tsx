@@ -1,35 +1,15 @@
 import { getArr } from "../../services/getArr"
 import { Row } from "../../components/Row"
 import { Cell } from "../../components/Cell";
+import { SpreadsheetProps } from "./types"
+import { useSpreadsheet } from "../../hooks/useSpreadsheet";
 
-type SpreadsheetProps = {
-	rows: number;
-	columns: number;
-}
-
-type GridContext = {
-	[key: string]: string
-}
 
 export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	rows,
 	columns
 }) => {
-
-	const gridContext: GridContext = {}
-	const columnsArr = getArr(columns, true);
-	const rowsArr = getArr(rows);
-
-	columnsArr.forEach(column => {
-		rowsArr.forEach(arr => {
-			const key = `${column}${arr}`
-			gridContext[key] = ""
-		})
-	})
-
-	console.log({
-		gridContext
-	})
+	const { columnsArr, rowsArr } = useSpreadsheet({ rows, columns })
 
 	return (
 		<section>
