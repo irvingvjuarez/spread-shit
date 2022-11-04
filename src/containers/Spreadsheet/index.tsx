@@ -7,12 +7,29 @@ type SpreadsheetProps = {
 	columns: number;
 }
 
+type GridContext = {
+	[key: string]: string
+}
+
 export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	rows,
 	columns
 }) => {
 
-	const columnsArr = getArr(columns, true)
+	const gridContext: GridContext = {}
+	const columnsArr = getArr(columns, true);
+	const rowsArr = getArr(rows);
+
+	columnsArr.forEach(column => {
+		rowsArr.forEach(arr => {
+			const key = `${column}${arr}`
+			gridContext[key] = ""
+		})
+	})
+
+	console.log({
+		gridContext
+	})
 
 	return (
 		<section>
@@ -28,7 +45,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 				</thead>
 
 				<tbody>
-					{getArr(rows).map(row => (
+					{rowsArr.map(row => (
 						<Row row={row as number} key={row}>
 							{columnsArr.map(column =>
 								<Cell className="p-1 cell" key={column} id={`${column}${row}`}>
