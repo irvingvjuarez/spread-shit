@@ -2,7 +2,7 @@ import { useCell } from "../../hooks/useCell"
 import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
-	const { editMode, handleBlur, toggleEditMode } = useCell(id)
+	const { editMode, handleBlur, toggleEditMode, gridState } = useCell(id)
 
 	if (editMode) return (
 		<td>
@@ -11,6 +11,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
 				type="text"
 				className="w-[90px] p-1 outline-none"
 				onBlur={handleBlur}
+				defaultValue={gridState[id as string]}
 			/>
 		</td>
 	)
@@ -18,7 +19,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
 	return (
 		<td className={className} onClick={toggleEditMode}>
 			<>
-				{children}
+				{id ? gridState[id] : children}
 			</>
 		</td>
 	)

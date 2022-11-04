@@ -26,8 +26,6 @@ export const useCell = (id?: string) => {
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		toggleEditMode()
 		if (id) {
-			console.log(gridState[id])
-
 			dispatch({
 				type: "update",
 				payload: {
@@ -41,6 +39,7 @@ export const useCell = (id?: string) => {
 	return {
 		editMode,
 		handleBlur,
-		toggleEditMode
+		toggleEditMode,
+		gridState
 	}
 }
