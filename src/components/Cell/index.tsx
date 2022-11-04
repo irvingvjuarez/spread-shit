@@ -9,9 +9,9 @@ export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
 			<input
 				autoFocus
 				type="text"
-				className="w-[90px] p-1 outline-none"
+				className="w-[90px] px-1 outline-none"
 				onBlur={handleBlur}
-				defaultValue={gridState[id as string]}
+				defaultValue={gridState[id as string].rawValue}
 			/>
 		</td>
 	)
@@ -19,7 +19,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, id }) => {
 	return (
 		<td className={className} onClick={toggleEditMode}>
 			<>
-				{id ? gridState[id] : children}
+				{id ? gridState[id].computedValue : children}
 			</>
 		</td>
 	)

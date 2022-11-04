@@ -29,7 +29,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 							<Row row={row as number} key={row}>
 								{columnsArr.map(column =>
 									<Cell
-										className="text-start p-1 cell"
+										className="text-start px-1 cell"
 										key={column}
 										id={`${column}${row}`}
 									/>

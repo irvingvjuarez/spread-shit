@@ -11,7 +11,10 @@ export const useSpreadsheet = (props: UseSpreadsheetProps) => {
 	columnsArr.forEach(column => {
 		rowsArr.forEach(arr => {
 			const key = `${column}${arr}`
-			gridContent[key] = ""
+			gridContent[key] = {
+				computedValue: "",
+				rawValue: ""
+			}
 		})
 	})
 

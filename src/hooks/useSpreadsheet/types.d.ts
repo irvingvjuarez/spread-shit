@@ -1,5 +1,8 @@
 export type GridContent = {
-	[key: string]: string
+	[key: string]: {
+		computedValue: string;
+		rawValue: string;
+	}
 }
 
 export type UseSpreadsheetProps = {

@@ -9,8 +9,12 @@ const gridReducer = (state: GridContent, action: Action) => {
 	switch(type) {
 		case "update":
 			const {id, value} = payload as any
+			const usingEval = value ? eval(value) : ""
+
 			const newState = {...state}
-			newState[id] = value
+			newState[id].rawValue = value
+			newState[id].computedValue = String(usingEval)
+
 			return newState
 		default:
 			return state
