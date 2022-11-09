@@ -8,8 +8,11 @@ const gridReducer = (state: GridContent, action: Action) => {
 
 	switch(type) {
 		case "update":
-			const {id, value} = payload as any
-			const usingEval = value ? eval(value) : ""
+			let {id, value} = payload as any
+			value = value.trim()
+
+			const isOperation = value.charAt(0) === "="
+			const usingEval = isOperation ? eval(value.replace("=", "")) : value
 
 			const newState = {...state}
 			newState[id].rawValue = value
