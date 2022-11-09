@@ -10,7 +10,7 @@ export const gridReducer = (state: GridContent, action: Action) => {
 	switch(type) {
 		case GridActions.update:
 			let {id, value} = payload as any
-			let computedValue
+			let computedValue: undefined | string
 			value = value.trim()
 
 			const isOperation = value.charAt(0) === "="
@@ -18,14 +18,16 @@ export const gridReducer = (state: GridContent, action: Action) => {
 			const references: string[] | null = value.match(referenceRegexp)
 
 			if (references && isOperation) {
+				computedValue = value
 				references.forEach(reference => {
 					const referenceValue = state[reference.toUpperCase()].computedValue
-					value = value.replace(reference, referenceValue)
+					computedValue = (computedValue as string).replace(reference, referenceValue)
 				})
 			}
 
 			try {
-				computedValue = isOperation ? eval(value.replace("=", "")) : value
+				const valueToUse = computedValue ?? value
+				computedValue = isOperation ? eval(valueToUse.replace("=", "")) : valueToUse
 			} catch(err) {
 				computedValue = "#ERROR"
 			}
