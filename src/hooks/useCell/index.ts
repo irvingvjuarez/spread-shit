@@ -1,33 +1,7 @@
 import { useContext, useReducer, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
-import { Action } from "../../types"
 import { GridContent } from "../useSpreadsheet/types"
-
-const gridReducer = (state: GridContent, action: Action) => {
-	const { type, payload } = action
-
-	switch(type) {
-		case "update":
-			let {id, value} = payload as any
-			value = value.trim()
-
-			const isOperation = value.charAt(0) === "="
-			let computedValue
-			try {
-				computedValue = isOperation ? eval(value.replace("=", "")) : value
-			} catch(err) {
-				computedValue = "#ERROR"
-			}
-
-			const newState = {...state}
-			newState[id].rawValue = value
-			newState[id].computedValue = String(computedValue)
-
-			return newState
-		default:
-			return state
-	}
-}
+import { gridReducer } from "../../reducers/grid/grid.reducer"
 
 export const useCell = (id?: string) => {
 	const gridContent = useContext(GridContext) as GridContent
@@ -38,13 +12,8 @@ export const useCell = (id?: string) => {
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		toggleEditMode()
 		if (id) {
-			dispatch({
-				type: "update",
-				payload: {
-					id,
-					value: evt.target.value
-				}
-			})
+			const payload = { id, value: evt.target.value }
+			dispatch({ type: "update", payload })
 		}
 	}
 
