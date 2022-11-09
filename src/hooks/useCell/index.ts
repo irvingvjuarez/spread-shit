@@ -12,11 +12,16 @@ const gridReducer = (state: GridContent, action: Action) => {
 			value = value.trim()
 
 			const isOperation = value.charAt(0) === "="
-			const usingEval = isOperation ? eval(value.replace("=", "")) : value
+			let computedValue
+			try {
+				computedValue = isOperation ? eval(value.replace("=", "")) : value
+			} catch(err) {
+				computedValue = "#ERROR"
+			}
 
 			const newState = {...state}
 			newState[id].rawValue = value
-			newState[id].computedValue = String(usingEval)
+			newState[id].computedValue = String(computedValue)
 
 			return newState
 		default:
