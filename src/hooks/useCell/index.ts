@@ -1,7 +1,7 @@
 import { useContext, useReducer, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { GridContent } from "../useSpreadsheet/types"
-import { gridReducer } from "../../reducers/grid/grid.reducer"
+import { gridReducer } from "@app/reducers/grid/grid.reducer"
 
 export const useCell = (id?: string) => {
 	const gridContent = useContext(GridContext) as GridContent
