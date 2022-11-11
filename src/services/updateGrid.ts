@@ -1,19 +1,24 @@
 import { GridContent } from "../hooks/useSpreadsheet/types";
 import { referenceRegexp } from "../regexps"
+
 type UpdateGridConfig = {
 	payload: unknown;
 	state: GridContent
 }
 
-export const updateGrid = (config: UpdateGridConfig) => {
-	const {payload, state} = config
+type GetNewValuesConfig = {
+	value: string;
+	newState: GridContent;
+	id: string;
+	state: GridContent;
+}
 
-	let {id, value} = payload as any
+const getNewValues = (config: GetNewValuesConfig) => {
+	let { value, newState, id, state } = config
 	let computedValue: undefined | string
 	value = value.trim()
 
 	const isOperation = value.charAt(0) === "="
-	const newState = {...state}
 	const references: string[] | null = value.match(referenceRegexp)
 
 	if (references && isOperation) {
@@ -35,7 +40,21 @@ export const updateGrid = (config: UpdateGridConfig) => {
 		computedValue = "#ERROR"
 	}
 
-	newState[id].rawValue = value
+	return {
+		rawValue: value,
+		computedValue
+	}
+}
+
+export const updateGrid = (config: UpdateGridConfig) => {
+	const {payload, state} = config
+	let {id, value} = payload as any
+
+	const newState = {...state}
+
+	const {rawValue, computedValue} = getNewValues({ value, newState, id, state })
+
+	newState[id].rawValue = rawValue
 	newState[id].computedValue = String(computedValue)
 
 	return newState
