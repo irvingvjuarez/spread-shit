@@ -20,6 +20,10 @@ export const gridReducer = (state: GridContent, action: Action) => {
 			if (references && isOperation) {
 				computedValue = value
 				references.forEach(reference => {
+					const refInDeps = newState[reference].dependencies.includes(id)
+					if (!refInDeps) {
+						newState[reference].dependencies.push(id)
+					}
 					const referenceValue = state[reference.toUpperCase()].computedValue
 					computedValue = (computedValue as string).replace(reference, referenceValue)
 				})

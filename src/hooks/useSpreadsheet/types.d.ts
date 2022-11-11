@@ -2,6 +2,7 @@ export type GridContent = {
 	[key: string]: {
 		computedValue: string;
 		rawValue: string;
+		dependencies: string[]
 	}
 }
 

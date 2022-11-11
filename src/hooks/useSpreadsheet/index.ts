@@ -13,7 +13,8 @@ export const useSpreadsheet = (props: UseSpreadsheetProps) => {
 			const key = `${column}${arr}`
 			gridContent[key] = {
 				computedValue: "",
-				rawValue: ""
+				rawValue: "",
+				dependencies: []
 			}
 		})
 	})

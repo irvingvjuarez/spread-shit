@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { useCell } from "../../hooks/useCell"
 import { CellProps } from "./types"
 

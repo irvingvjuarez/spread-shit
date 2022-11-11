@@ -1,5 +1,5 @@
 export type CellProps = {
 	children?: string;
 	className?: string;
-	id?: string;
+	id?: string
 }
