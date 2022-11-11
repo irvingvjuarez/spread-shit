@@ -1,0 +1,1 @@
+export const referenceRegexp = new RegExp("[A-Z][1-9]", "ig")
