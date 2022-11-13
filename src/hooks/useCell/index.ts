@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from "react"
+import React, { useContext, useEffect, useReducer, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { GridContent } from "../useSpreadsheet/types"
 import { gridReducer } from "@app/reducers/grid/grid.reducer"

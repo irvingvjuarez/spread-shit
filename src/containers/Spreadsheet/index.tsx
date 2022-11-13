@@ -8,7 +8,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	rows,
 	columns
 }) => {
-	const { columnsArr, rowsArr, gridContent } = useSpreadsheet({ rows, columns })
+	const { columnsArr, rowsArr, gridContent, gridState } = useSpreadsheet({ rows, columns })
 
 	return (
 		<section>
@@ -31,8 +31,9 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 									<Cell
 										className="text-start px-1 cell"
 										key={column}
-										id={`${column}${row}`}
-									/>
+									>
+										{gridState[`${column}${row}`].computedValue}
+									</Cell>
 								)}
 							</Row>
 						))}

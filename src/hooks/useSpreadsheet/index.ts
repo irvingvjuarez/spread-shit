@@ -1,4 +1,7 @@
+import { useReducer } from "react";
+import { gridReducer } from "../../reducers/grid/grid.reducer";
 import { getArr } from "../../services/getArr";
+import { Action } from "../../types";
 import { GridContent, UseSpreadsheetProps } from "./types";
 
 export const useSpreadsheet = (props: UseSpreadsheetProps) => {
@@ -19,9 +22,12 @@ export const useSpreadsheet = (props: UseSpreadsheetProps) => {
 		})
 	})
 
+	const [gridState, dispatch] = useReducer<React.Reducer<GridContent, Action>>(gridReducer, gridContent)
+
 	return {
 		columnsArr,
 		rowsArr,
-		gridContent
+		gridContent,
+		gridState
 	}
 }
