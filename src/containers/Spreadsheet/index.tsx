@@ -11,8 +11,8 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 }) => {
 	const { columnsArr, rowsArr, gridContent, gridState, dispatch } = useSpreadsheet({ rows, columns })
 	const handleUpdate = (id: string) => (content: string) => {
-		console.log({id, content})
-		// dispatch({ type: GridActions.update, payload: id })
+		const payload = {id, content}
+		dispatch({ type: GridActions.update, payload })
 	}
 	// console.log(gridState)
 

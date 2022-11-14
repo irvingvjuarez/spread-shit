@@ -24,7 +24,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur }) => {
 				type="text"
 				className="w-[90px] px-1 outline-none"
 				onBlur={handleBlur}
-				// defaultValue={gridContent[id as string].rawValue}
+				defaultValue={children}
 			/>
 		</td>
 	)
