@@ -8,7 +8,12 @@ export const gridReducer = (state: GridContent, action: Action) => {
 
 	switch(type) {
 		case GridActions.update:
-			const newState = updateGrid({ payload, state })
+			// const newState = updateGrid({ payload, state })
+			// return newState
+			const newState = {...state}
+			// newState[payload as string] = {
+			// 	computedValue
+			// }
 			return newState
 		default:
 			return state
