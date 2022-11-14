@@ -9,10 +9,11 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	columns
 }) => {
 	const { columnsArr, rowsArr, gridContent, gridState } = useSpreadsheet({ rows, columns })
+	console.log(gridState)
 
 	return (
 		<section>
-			<GridContext.Provider value={gridContent}>
+			<GridContext.Provider value={gridState}>
 				<table>
 					<thead>
 						<Row>
