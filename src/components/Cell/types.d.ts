@@ -3,4 +3,5 @@ export type CellProps = {
 	className?: string;
 	onBlur?: (content: string) => void;
 	inputValue?: string;
+	cellDeps?: string[];
 }

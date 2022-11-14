@@ -58,20 +58,20 @@ export const updateGrid = (config: UpdateGridConfig) => {
 	newState[id].rawValue = rawValue
 	newState[id].computedValue = String(computedValue)
 
-	// if (newState[id].dependencies.length > 0) {
-	// 	newState[id].dependencies.forEach(dep => {
-	// 		const depValue = state[dep].rawValue
-	// 		const { rawValue: depRaw, computedValue: depComputed } = getNewValues({
-	// 			value: depValue,
-	// 			id: dep,
-	// 			newState,
-	// 			state
-	// 		})
+	if (newState[id].dependencies.length > 0) {
+		newState[id].dependencies.forEach(dep => {
+			const depValue = state[dep].rawValue
+			const { rawValue: depRaw, computedValue: depComputed } = getNewValues({
+				value: depValue,
+				id: dep,
+				newState,
+				state
+			})
 
-	// 		newState[dep].rawValue = depRaw
-	// 		newState[dep].computedValue = String(depComputed)
-	// 	})
-	// }
+			newState[dep].rawValue = depRaw
+			newState[dep].computedValue = String(depComputed)
+		})
+	}
 
 	return newState
 }

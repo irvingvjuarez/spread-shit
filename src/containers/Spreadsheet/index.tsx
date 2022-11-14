@@ -14,7 +14,6 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 		const payload = {id, content}
 		dispatch({ type: GridActions.update, payload })
 	}
-	// console.log(gridState)
 
 	return (
 		<section>
@@ -39,6 +38,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 										key={column}
 										onBlur={handleUpdate(`${column}${row}`)}
 										inputValue={gridState[`${column}${row}`].rawValue}
+										cellDeps={gridState[`${column}${row}`].dependencies}
 									>
 										{gridState[`${column}${row}`].computedValue}
 									</Cell>

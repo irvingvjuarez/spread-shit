@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { CellProps } from "./types"
 
-export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue }) => {
+export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, cellDeps }) => {
 	const [editMode, setEditMode] = useState(false)
 	const toggleEditMode = () => setEditMode(prev => !prev)
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
