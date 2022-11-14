@@ -38,6 +38,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 										className="text-start px-1 cell"
 										key={column}
 										onBlur={handleUpdate(`${column}${row}`)}
+										inputValue={gridState[`${column}${row}`].rawValue}
 									>
 										{gridState[`${column}${row}`].computedValue}
 									</Cell>

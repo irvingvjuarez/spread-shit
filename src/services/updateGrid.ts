@@ -1,5 +1,6 @@
 import { GridContent } from "../hooks/useSpreadsheet/types";
 import { referenceRegexp } from "../regexps"
+import { UpdatePayload } from "../types";
 
 type UpdateGridConfig = {
 	payload: unknown;
@@ -48,29 +49,29 @@ const getNewValues = (config: GetNewValuesConfig) => {
 
 export const updateGrid = (config: UpdateGridConfig) => {
 	const {payload, state} = config
-	let {id, value} = payload as any
+	let {id, content} = payload as UpdatePayload
 
 	const newState = {...state}
 
-	const {rawValue, computedValue} = getNewValues({ value, newState, id, state })
+	const {rawValue, computedValue} = getNewValues({ value: content, newState, id, state })
 
 	newState[id].rawValue = rawValue
 	newState[id].computedValue = String(computedValue)
 
-	if (newState[id].dependencies.length > 0) {
-		newState[id].dependencies.forEach(dep => {
-			const depValue = state[dep].rawValue
-			const { rawValue: depRaw, computedValue: depComputed } = getNewValues({
-				value: depValue,
-				id: dep,
-				newState,
-				state
-			})
+	// if (newState[id].dependencies.length > 0) {
+	// 	newState[id].dependencies.forEach(dep => {
+	// 		const depValue = state[dep].rawValue
+	// 		const { rawValue: depRaw, computedValue: depComputed } = getNewValues({
+	// 			value: depValue,
+	// 			id: dep,
+	// 			newState,
+	// 			state
+	// 		})
 
-			newState[dep].rawValue = depRaw
-			newState[dep].computedValue = String(depComputed)
-		})
-	}
+	// 		newState[dep].rawValue = depRaw
+	// 		newState[dep].computedValue = String(depComputed)
+	// 	})
+	// }
 
 	return newState
 }

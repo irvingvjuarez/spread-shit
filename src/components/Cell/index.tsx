@@ -1,10 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import { GridContext } from "../../contexts/GridContext"
-import { useCell } from "../../hooks/useCell"
-import { GridContent } from "../../hooks/useSpreadsheet/types"
+import { useState } from "react"
 import { CellProps } from "./types"
 
-export const Cell: React.FC<CellProps> = ({ children, className, onBlur }) => {
+export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue }) => {
 	const [editMode, setEditMode] = useState(false)
 	const toggleEditMode = () => setEditMode(prev => !prev)
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -13,9 +10,6 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur }) => {
 			onBlur(evt.target.value)
 		}
 	}
-	// const gridContent = useContext(GridContext) as GridContent
-	// const { editMode, handleBlur, toggleEditMode, gridState } = useCell(id)
-	const gridContent = useContext(GridContext) as GridContent
 
 	if (editMode) return (
 		<td>
@@ -24,7 +18,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur }) => {
 				type="text"
 				className="w-[90px] px-1 outline-none"
 				onBlur={handleBlur}
-				defaultValue={children}
+				defaultValue={inputValue}
 			/>
 		</td>
 	)
