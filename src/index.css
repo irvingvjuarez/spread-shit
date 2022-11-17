@@ -9,9 +9,21 @@
 @tailwind utilities;
 
 .cell {
-	@apply border-[0.5px] border-gray-500 min-w-[90px];
+	@apply border-[0.5px] border-gray-500 min-w-[90px] relative;
 }
 
 .cell-head {
 	@apply bg-gray-300 sticky;
+}
+
+.head-top::after {
+	content: "";
+	display: block;
+	height: 100%;
+	width: 2px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: e-resize;
+	background-color: rgb(209 213 219);
 }
