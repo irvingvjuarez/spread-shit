@@ -1,9 +1,9 @@
 import { RowProps } from "./types"
 
-export const Row: React.FC<RowProps> = ({ children, row }) => {
+export const Row: React.FC<RowProps> = ({ children, row, className }) => {
 	return (
-		<tr className="border-red-100">
-			<td className={`cell text-center ${row && "font-bold"}`}>
+		<tr className={`${className && className}`}>
+			<td className={`cell text-center cell-head left-0 ${row && "font-bold"}`}>
 				{row ?? null}
 			</td>
 

@@ -18,11 +18,11 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	return (
 		<section>
 			<GridContext.Provider value={gridState}>
-				<table>
-					<thead className="sticky top-0">
+				<table className="relative">
+					<thead className="cell-head top-0">
 						<Row>
 							{columnsArr.map(column =>
-								<Cell className="cell cell-head font-bold text-center" key={column}>
+								<Cell className="cell font-bold text-center" key={column}>
 									{column as string}
 								</Cell>
 							)}

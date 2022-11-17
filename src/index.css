@@ -13,5 +13,5 @@
 }
 
 .cell-head {
-	@apply bg-gray-800 text-white;
+	@apply bg-gray-300 sticky;
 }
