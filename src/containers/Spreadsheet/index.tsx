@@ -22,7 +22,10 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 					<thead className="cell-head top-0">
 						<Row>
 							{columnsArr.map(column =>
-								<Cell className="cell head-top font-bold text-center" key={column}>
+								<Cell
+									className="cell head-top font-bold text-center"
+									key={column}
+								>
 									{column as string}
 								</Cell>
 							)}
@@ -32,13 +35,14 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 					<tbody>
 						{rowsArr.map(row => (
 							<Row row={row as number} key={row}>
-								{columnsArr.map(column =>
+								{columnsArr.map((column, columnIndex) =>
 									<Cell
 										className="text-start px-1 cell"
 										key={column}
 										onBlur={handleUpdate(`${column}${row}`)}
 										inputValue={gridState[`${column}${row}`].rawValue}
-										cellDeps={gridState[`${column}${row}`].dependencies}
+										isHead={true}
+										indexValue={columnIndex}
 									>
 										{gridState[`${column}${row}`].computedValue}
 									</Cell>
