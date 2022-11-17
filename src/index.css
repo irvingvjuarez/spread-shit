@@ -9,5 +9,9 @@
 @tailwind utilities;
 
 .cell {
-	@apply border-2 min-w-[90px] border-black;
+	@apply border-[0.5px] border-gray-500 min-w-[90px];
+}
+
+.cell-head {
+	@apply bg-gray-800 text-white;
 }

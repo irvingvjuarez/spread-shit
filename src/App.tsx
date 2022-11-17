@@ -1,7 +1,7 @@
 import { Spreadsheet } from "./containers/Spreadsheet"
 
 function App() {
-  return <Spreadsheet rows={10} columns={10} />
+  return <Spreadsheet rows={100} columns={26} />
 }
 
 export default App

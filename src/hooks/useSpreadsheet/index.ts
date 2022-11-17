@@ -27,7 +27,6 @@ export const useSpreadsheet = (props: UseSpreadsheetProps) => {
 	return {
 		columnsArr,
 		rowsArr,
-		gridContent,
 		gridState,
 		dispatch
 	}
