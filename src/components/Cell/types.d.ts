@@ -4,5 +4,4 @@ export type CellProps = {
 	onBlur?: (content: string) => void;
 	inputValue?: string;
 	isHead?: boolean;
-	indexValue?: number;
 }

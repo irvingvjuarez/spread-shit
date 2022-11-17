@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { CellProps } from "./types"
 
-export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, indexValue }) => {
+export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead }) => {
 	const [editMode, setEditMode] = useState(false)
 	const toggleEditMode = () => {
-		console.log("Checking keyboard clicks")
-		if (isHead) setEditMode(prev => !prev)
+		setEditMode(prev => !prev)
+	}
+	const viewKeyCode = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+		console.log(evt.key)
 	}
 
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -23,12 +25,13 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 				className="w-[90px] px-1 inset-1"
 				onBlur={handleBlur}
 				defaultValue={inputValue}
+				onKeyUp={viewKeyCode}
 			/>
 		</td>
 	)
 
 	return (
-		<td className={className} onClick={toggleEditMode} tabIndex={indexValue}>
+		<td className={className} onClick={toggleEditMode}>
 			<>
 				{children}
 			</>
