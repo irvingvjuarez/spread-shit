@@ -1,5 +1,7 @@
 import { useState } from "react"
-import { getNewCell } from "../../services/getNewCell"
+import { GRID_MOVEMENTS } from "../../globals"
+import { moveInGrid } from "../../services/moveInGrid"
+import { GridMovements } from "../../types"
 import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
@@ -10,20 +12,11 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 
 	const viewKeyCode = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		const keyValue = evt.key;
+		const isKeyValueAMovement = GRID_MOVEMENTS.includes(keyValue)
 
-		switch(keyValue) {
-			case "ArrowUp":
-				const upCell = getNewCell(cellID as string, "up")
-				console.log(upCell)
-			break;
-			case "ArrowDown":
-				const downCell = getNewCell(cellID as string, "down")
-				console.log(downCell)
-			break;
-			case "Tab":
-				const rightCell = getNewCell(cellID as string, "right")
-				console.log(rightCell)
-			break;
+		if (isKeyValueAMovement){
+			const nextCell = moveInGrid(cellID as string, keyValue as GridMovements)
+			console.log(nextCell)
 		}
 	}
 
