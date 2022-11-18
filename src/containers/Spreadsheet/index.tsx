@@ -35,13 +35,14 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 					<tbody>
 						{rowsArr.map(row => (
 							<Row row={row as number} key={row}>
-								{columnsArr.map((column, columnIndex) =>
+								{columnsArr.map(column =>
 									<Cell
 										className="text-start px-1 cell"
 										key={column}
 										onBlur={handleUpdate(`${column}${row}`)}
 										inputValue={gridState[`${column}${row}`].rawValue}
 										isHead={true}
+										cellID={`${column}${row}`}
 									>
 										{gridState[`${column}${row}`].computedValue}
 									</Cell>

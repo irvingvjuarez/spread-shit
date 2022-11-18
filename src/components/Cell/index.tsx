@@ -1,13 +1,28 @@
 import { useState } from "react"
 import { CellProps } from "./types"
 
-export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead }) => {
+export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
 	const [editMode, setEditMode] = useState(false)
 	const toggleEditMode = () => {
-		setEditMode(prev => !prev)
+		if (isHead) setEditMode(prev => !prev)
 	}
+
 	const viewKeyCode = (evt: React.KeyboardEvent<HTMLInputElement>) => {
-		console.log(evt.key)
+		const keyValue = evt.key;
+
+		switch(keyValue) {
+			case "ArrowUp":
+				const rowValue = cellID?.substring(1, 2) as string
+				const newRowValue = String(Number(rowValue) - 1)
+				const upClassName = cellID?.replace(rowValue, newRowValue) as string
+				const upCell = document.querySelector("." + upClassName)
+				upCell?.click()
+			break;
+			case "ArrowDown":
+			break;
+			case "Tab":
+			break;
+		}
 	}
 
 	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -22,16 +37,16 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 			<input
 				autoFocus
 				type="text"
-				className="w-[90px] px-1 inset-1"
+				className={`w-[90px] px-1 inset-1 ${cellID}`}
 				onBlur={handleBlur}
 				defaultValue={inputValue}
-				onKeyUp={viewKeyCode}
+				onKeyDown={viewKeyCode}
 			/>
 		</td>
 	)
 
 	return (
-		<td className={className} onClick={toggleEditMode}>
+		<td className={`${cellID} ${className}`} onClick={toggleEditMode}>
 			<>
 				{children}
 			</>
