@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { getNewCell } from "../../services/getNewCell"
 import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
@@ -12,15 +13,16 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 
 		switch(keyValue) {
 			case "ArrowUp":
-				const rowValue = cellID?.substring(1, 2) as string
-				const newRowValue = String(Number(rowValue) - 1)
-				const upClassName = cellID?.replace(rowValue, newRowValue) as string
-				const upCell = document.querySelector("." + upClassName)
-				upCell?.click()
+				const upCell = getNewCell(cellID as string, "up")
+				console.log(upCell)
 			break;
 			case "ArrowDown":
+				const downCell = getNewCell(cellID as string, "down")
+				console.log(downCell)
 			break;
 			case "Tab":
+				const rightCell = getNewCell(cellID as string, "right")
+				console.log(rightCell)
 			break;
 		}
 	}
