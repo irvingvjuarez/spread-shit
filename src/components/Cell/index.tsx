@@ -12,11 +12,14 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 
 	const viewKeyCode = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		const keyValue = evt.key;
+		if (keyValue === "Tab") {
+			evt.preventDefault()
+		}
+
 		const isKeyValueAMovement = GRID_MOVEMENTS.includes(keyValue)
 
 		if (isKeyValueAMovement){
-			const nextCell = moveInGrid(cellID as string, keyValue as GridMovements)
-			console.log(nextCell)
+			moveInGrid(cellID as string, keyValue as GridMovements)
 		}
 	}
 

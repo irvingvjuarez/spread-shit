@@ -27,6 +27,9 @@ export const moveInGrid = (currentID: string, movement: GridMovements) => {
 	}
 
 	const newClassname = currentID?.replace(replaceable, newValue) as string
-	return newClassname
-	// const upCell = document.querySelector("." + upClassName)
+	const nextCell = document.querySelector("." + newClassname)
+
+	if(nextCell) {
+		nextCell.click()
+	}
 }
