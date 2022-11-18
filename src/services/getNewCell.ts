@@ -6,28 +6,24 @@ const getRowValue = (current: string | number, moveTo: Omit<Position, "left" | "
 	return String(updated)
 }
 
-export const getNewCell = (currentID: string, position: Position) => {
-	let newValue = "", charCode
+const getColumnValue = (columnLetter: string, position: Omit<Position, "up" | "down">) => {
+	const currentCharCode = columnLetter.charCodeAt(0)
+	const newCharCode = position === "left" ? currentCharCode - 1 : currentCharCode + 1
+	const newValue = String.fromCharCode(newCharCode)
+	return newValue
+}
 
-	const isXAxis = (position === "left" || position === "right")
-	const replaceFromTo: [number, number] = isXAxis ? [0,1] : [1,currentID.length]
+export const getNewCell = (currentID: string, position: Position) => {
+	let newValue = ""
+
+	const isColumnMovement = (position === "left" || position === "right")
+	const replaceFromTo: [number, number] = isColumnMovement ? [0,1] : [1,currentID.length]
 	const replaceable = currentID?.substring(...replaceFromTo) as string
 
-	switch(position) {
-		case "down":
-			newValue = getRowValue(replaceable, position)
-		break;
-		case "up":
-			newValue = getRowValue(replaceable, position)
-		break;
-		case "left":
-			charCode = replaceable.charCodeAt(0)
-			newValue = String.fromCharCode(charCode - 1)
-		break;
-		case "right":
-			charCode = replaceable.charCodeAt(0)
-			newValue = String.fromCharCode(charCode + 1)
-		break;
+	if (isColumnMovement) {
+		newValue = getColumnValue(replaceable, position)
+	} else {
+		newValue = getRowValue(replaceable, position)
 	}
 
 	const newClassname = currentID?.replace(replaceable, newValue) as string
