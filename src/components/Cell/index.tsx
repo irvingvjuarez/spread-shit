@@ -1,20 +1,10 @@
-import { useState } from "react"
+import { useCell } from "../../hooks/useCell"
 import { useGridMovement } from "../../hooks/useGridMovement"
 import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
 	const { viewKeyCode } = useGridMovement(cellID)
-	const [editMode, setEditMode] = useState(false)
-	const toggleEditMode = () => {
-		if (isHead) setEditMode(prev => !prev)
-	}
-
-	const handleBlur = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
-		toggleEditMode()
-		if (onBlur) {
-			onBlur(evt.target.value)
-		}
-	}
+	const { editMode, handleBlur, toggleEditMode } = useCell({isHead, onBlur})
 
 	if (editMode) return (
 		<td>
