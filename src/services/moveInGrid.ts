@@ -1,5 +1,7 @@
 import { GridMovements } from "../types"
 
+const columnMovements: GridMovements[] = ["Tab", "Shift+Tab", "ArrowLeft", "ArrowRight"]
+
 const getRowValue = (current: string | number, moveTo: Omit<GridMovements, "Tab">) => {
 	current = Number(current)
 	const updated = moveTo === "ArrowUp" ? current - 1 : current + 1
@@ -8,7 +10,7 @@ const getRowValue = (current: string | number, moveTo: Omit<GridMovements, "Tab"
 
 const getColumnValue = (columnLetter: string, position: Omit<GridMovements, "ArrowUp" | "ArrowDown">) => {
 	const currentCharCode = columnLetter.charCodeAt(0)
-	const newCharCode = position === "Tab" ? currentCharCode + 1 : currentCharCode - 1
+	const newCharCode = (position === "Tab" || position === "ArrowRight") ? currentCharCode + 1 : currentCharCode - 1
 	const newValue = String.fromCharCode(newCharCode)
 	return newValue
 }
@@ -16,7 +18,7 @@ const getColumnValue = (columnLetter: string, position: Omit<GridMovements, "Arr
 export const moveInGrid = (currentID: string, movement: GridMovements) => {
 	let newValue = ""
 
-	const isColumnMovement = (movement === "Tab" || movement === "Shift+Tab")
+	const isColumnMovement = columnMovements.includes(movement)
 	const replaceFromTo: [number, number] = isColumnMovement ? [0,1] : [1,currentID.length]
 	const replaceable = currentID?.substring(...replaceFromTo) as string
 

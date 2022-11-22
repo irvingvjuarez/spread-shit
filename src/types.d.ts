@@ -11,5 +11,7 @@ export type UpdatePayload = {
 export type GridMovements =
 	| "ArrowUp"
 	| "ArrowDown"
+	| "ArrowLeft"
+	| "ArrowRight"
 	| "Tab"
 	| "Shift+Tab"
