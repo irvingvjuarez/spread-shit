@@ -16,7 +16,7 @@ const getColumnValue = (columnLetter: string, position: Omit<GridMovements, "Arr
 export const moveInGrid = (currentID: string, movement: GridMovements) => {
 	let newValue = ""
 
-	const isColumnMovement = (movement === "Tab")
+	const isColumnMovement = (movement === "Tab" || movement === "Shift+Tab")
 	const replaceFromTo: [number, number] = isColumnMovement ? [0,1] : [1,currentID.length]
 	const replaceable = currentID?.substring(...replaceFromTo) as string
 

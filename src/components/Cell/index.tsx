@@ -6,14 +6,25 @@ import { CellProps } from "./types"
 
 export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
 	const [editMode, setEditMode] = useState(false)
+	const [keyRecord, setKeyRecord] = useState("")
 	const toggleEditMode = () => {
 		if (isHead) setEditMode(prev => !prev)
 	}
 
 	const viewKeyCode = (evt: React.KeyboardEvent<HTMLInputElement>) => {
 		const keyValue = evt.key;
-		if (keyValue === "Tab") {
+
+		if(keyValue === "Shift") {
+			setKeyRecord(keyValue)
+			return
+		} else if (keyValue === "Tab") {
 			evt.preventDefault()
+
+			if(keyRecord === "Shift"){
+				moveInGrid(cellID as string, "Shift+Tab")
+				setKeyRecord("")
+				return
+			}
 		}
 
 		const isKeyValueAMovement = GRID_MOVEMENTS.includes(keyValue)

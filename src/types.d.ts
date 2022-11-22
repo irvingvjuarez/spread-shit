@@ -12,3 +12,4 @@ export type GridMovements =
 	| "ArrowUp"
 	| "ArrowDown"
 	| "Tab"
+	| "Shift+Tab"
