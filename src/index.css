@@ -27,3 +27,9 @@
 	cursor: e-resize;
 	background-color: rgb(209 213 219);
 }
+
+.cell-highlighted {
+	background-color: #0008C1;
+	color: white;
+	font-weight: bold;
+}
