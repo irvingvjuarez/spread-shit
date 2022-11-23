@@ -28,10 +28,14 @@ export const moveInGrid = (currentID: string, movement: GridMovements) => {
 		newValue = getRowValue(replaceable, movement)
 	}
 
-	const newClassname = currentID?.replace(replaceable, newValue) as string
-	const nextCell = document.querySelector("." + newClassname)
+	try {
+		const newClassname = currentID?.replace(replaceable, newValue) as string
+		const nextCell = document.querySelector("." + newClassname)
 
-	if(nextCell) {
-		nextCell.click()
+		if(nextCell) {
+			nextCell.click()
+		}
+	} catch(err) {
+		// The expected cell to reach is not a valid one
 	}
 }
