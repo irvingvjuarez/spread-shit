@@ -3,12 +3,11 @@ import { useGridMovement } from "../../hooks/useGridMovement"
 import { InputCell } from "../InputCell"
 import { CellProps } from "./types"
 
-export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputValue, isHead, cellID }) => {
+export const Cell: React.FC<CellProps> = ({ children, className, inputValue, isHead, cellID }) => {
 	const { viewKeyCode } = useGridMovement(cellID)
-	const { editMode, handleBlur, toggleEditMode } = useCell({isHead, onBlur})
+	const { editMode, toggleEditMode } = useCell({isHead})
 
 	if (editMode) return (<InputCell
-		handleBlur={handleBlur}
 		viewKeyCode={viewKeyCode}
 		inputValue={inputValue}
 		cellID={cellID}

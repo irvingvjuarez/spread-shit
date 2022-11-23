@@ -3,7 +3,6 @@ import { Cell } from "../../components/Cell";
 import { SpreadsheetProps } from "./types"
 import { useSpreadsheet } from "../../hooks/useSpreadsheet";
 import { GridContext } from "../../contexts/GridContext";
-import { GridActions } from "../../reducers/grid/actions";
 
 export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	rows,
@@ -11,11 +10,6 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 }) => {
 	const { columnsArr, rowsArr, gridState, dispatch } = useSpreadsheet({ rows, columns })
 	const spreadSheetProviderValue = { gridState, dispatch }
-
-	const handleUpdate = (id: string) => (content: string) => {
-		const payload = {id, content}
-		dispatch({ type: GridActions.update, payload })
-	}
 
 	return (
 		<section>
@@ -41,7 +35,6 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 									<Cell
 										className="text-start px-1 cell"
 										key={column}
-										onBlur={handleUpdate(`${column}${row}`)}
 										inputValue={gridState[`${column}${row}`].rawValue}
 										isHead={true}
 										cellID={`${column}${row}`}
