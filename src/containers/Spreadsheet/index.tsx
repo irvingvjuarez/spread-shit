@@ -10,6 +10,8 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 	columns
 }) => {
 	const { columnsArr, rowsArr, gridState, dispatch } = useSpreadsheet({ rows, columns })
+	const spreadSheetProviderValue = { gridState, dispatch }
+
 	const handleUpdate = (id: string) => (content: string) => {
 		const payload = {id, content}
 		dispatch({ type: GridActions.update, payload })
@@ -17,7 +19,7 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 
 	return (
 		<section>
-			<GridContext.Provider value={gridState}>
+			<GridContext.Provider value={spreadSheetProviderValue}>
 				<table className="relative">
 					<thead className="cell-head top-0">
 						<Row>

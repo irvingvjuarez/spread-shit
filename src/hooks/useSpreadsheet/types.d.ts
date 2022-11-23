@@ -6,6 +6,11 @@ export type GridContent = {
 	}
 }
 
+export type SpreadsheetState = {
+	dispatch: React.Dispatch<Action>,
+	gridState: GridContent
+}
+
 export type UseSpreadsheetProps = {
 	rows: number;
 	columns: number;
