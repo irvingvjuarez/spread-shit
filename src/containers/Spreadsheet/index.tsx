@@ -33,11 +33,10 @@ export const Spreadsheet: React.FC<SpreadsheetProps> = ({
 							<Row row={row as number} key={row}>
 								{columnsArr.map(column =>
 									<Cell
-										className="text-start px-1 cell"
 										key={column}
-										inputValue={gridState[`${column}${row}`].rawValue}
-										isHead={true}
 										cellID={`${column}${row}`}
+										className="text-start px-1 cell"
+										isHead={true}
 									>
 										{gridState[`${column}${row}`].computedValue}
 									</Cell>

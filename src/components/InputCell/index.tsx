@@ -5,8 +5,9 @@ import { SpreadsheetState } from "../../hooks/useSpreadsheet/types"
 import { GridActions } from "../../reducers/grid/actions"
 import { InputCellProps } from "./types"
 
-export const InputCell: React.FC<InputCellProps> = ({ cellID, inputValue, viewKeyCode, toggleEditMode }) => {
-	const { dispatch } = useContext(GridContext) as SpreadsheetState
+export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
+	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
+	const inputValue = gridState[cellID || ""].rawValue
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		const { value } = evt.target
