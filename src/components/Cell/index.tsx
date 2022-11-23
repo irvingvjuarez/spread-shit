@@ -12,6 +12,7 @@ export const Cell: React.FC<CellProps> = ({ children, className, onBlur, inputVa
 		viewKeyCode={viewKeyCode}
 		inputValue={inputValue}
 		cellID={cellID}
+		toggleEditMode={toggleEditMode}
 	/>)
 
 	return (
