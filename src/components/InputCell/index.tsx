@@ -17,10 +17,10 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 	}, [])
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
-		unhighlightCells()
-
 		const { value } = evt.target
 		const payload = {id: cellID, content: value}
+
+		unhighlightCells()
 		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
 	}
@@ -31,6 +31,10 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 			const currentReferences = inputValue.match(REFERENCE_REGEXP) || []
 
 			if (currentReferences.length > 0) {
+				if (currentReferences.length !== referenceMatches.length) {
+					unhighlightCells()
+				}
+
 				referenceMatches = [...currentReferences]
 				referenceMatches.forEach(match => {
 					match = match.toUpperCase()
