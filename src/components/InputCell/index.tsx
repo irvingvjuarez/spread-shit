@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { REFERENCE_REGEXP } from "../../globals"
 import { SpreadsheetState } from "../../hooks/useSpreadsheet/types"
@@ -11,6 +11,10 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 	const inputRef = useRef<null | HTMLInputElement>(null)
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
 	const inputValue = gridState[cellID || ""].rawValue
+
+	useEffect(() => {
+		watchReferences()
+	}, [])
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		unhighlightCells()
