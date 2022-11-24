@@ -11,6 +11,9 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 	const inputValue = gridState[cellID || ""].rawValue
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
+		const currentHighlightedCells = document.querySelectorAll(".cell-highlighted")
+		currentHighlightedCells.forEach(cell => cell.classList.remove("cell-highlighted"))
+
 		const { value } = evt.target
 		const payload = {id: cellID, content: value}
 		toggleEditMode()
@@ -23,8 +26,10 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 			const currentReferences = inputValue.match(REFERENCE_REGEXP) || []
 
 			if (currentReferences.length > 0) {
-				currentReferences.forEach(match => {
-					const element = document.querySelector(`.${match.toUpperCase()}`)
+				referenceMatches = [...currentReferences]
+				referenceMatches.forEach(match => {
+					match = match.toUpperCase()
+					const element = document.querySelector(`.${match}`)
 					element?.classList.add("cell-highlighted")
 				})
 			}
