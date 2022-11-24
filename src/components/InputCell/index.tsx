@@ -2,7 +2,7 @@ import { useInputCell } from "../../hooks/useInputCell"
 import { InputCellProps } from "./types"
 
 export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
-	const { inputRef, handleUpdate, inputValue, watchReferences } = useInputCell({ cellID, toggleEditMode })
+	const { inputRef, handleUpdate, inputValue, handleChange } = useInputCell({ cellID, toggleEditMode })
 
 	return (
 		<td>
@@ -14,7 +14,7 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 				onBlur={handleUpdate}
 				defaultValue={inputValue}
 				onKeyDown={viewKeyCode}
-				onChange={watchReferences}
+				onChange={handleChange}
 			/>
 		</td>
 	)

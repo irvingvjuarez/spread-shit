@@ -19,12 +19,16 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	}, [])
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
-		const value = evt.target.value.toUpperCase()
+		const value = evt.target.value.replaceAll(REFERENCE_REGEXP, (match) => match.toUpperCase())
 		const payload = {id: cellID, content: value}
 
 		unhighlightCells()
 		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
+	}
+
+	const handleChange = () => {
+		watchReferences()
 	}
 
 	const watchReferences = () => {
@@ -51,6 +55,6 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		inputRef,
 		handleUpdate,
 		inputValue,
-		watchReferences
+		handleChange
 	}
 }
