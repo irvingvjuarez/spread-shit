@@ -14,6 +14,13 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
 	const inputValue = gridState[cellID || ""].rawValue
 
+	const getInputValue = () => {
+		const inputValue = inputRef.current.value
+		const isOperation = (inputValue.charAt(0) === "=")
+
+		return { inputValue, isOperation }
+	}
+
 	useEffect(() => {
 		watchReferences()
 	}, [])
@@ -29,11 +36,20 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 	const handleChange = () => {
 		watchReferences()
+		watchFunctions()
+	}
+
+	const watchFunctions = () => {
+		const {inputValue, isOperation} = getInputValue()
+		if (isOperation) {
+			// Show list of functions available
+			console.log("Showing list of functions available")
+		}
 	}
 
 	const watchReferences = () => {
-		const { value: inputValue } = inputRef.current as HTMLInputElement
-		if (inputValue.charAt(0) === "=") {
+		const {inputValue, isOperation} = getInputValue()
+		if (isOperation) {
 			const currentReferences = inputValue.match(REFERENCE_REGEXP) || []
 
 			if (currentReferences.length > 0) {
