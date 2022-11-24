@@ -19,7 +19,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	}, [])
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
-		const { value } = evt.target
+		const value = evt.target.value.toUpperCase()
 		const payload = {id: cellID, content: value}
 
 		unhighlightCells()
