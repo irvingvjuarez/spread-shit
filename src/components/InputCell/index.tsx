@@ -1,11 +1,21 @@
 import { useInputCell } from "../../hooks/useInputCell"
 import { InputCellProps } from "./types"
+import { FUNCTIONS_LIST } from "../../globals"
 
 export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
-	const { inputRef, handleUpdate, inputValue, handleChange } = useInputCell({ cellID, toggleEditMode })
+	const { 
+		inputRef, handleUpdate, inputValue,
+		handleChange, showFunctionsList
+	} = useInputCell({ cellID, toggleEditMode })
 
 	return (
-		<td>
+		<td className="input-cell">
+			{showFunctionsList && <ul className="functions-list">
+				{FUNCTIONS_LIST.map(item => 
+					<li className="functions-item" key={item}>{item}</li>
+				)}
+			</ul>}
+
 			<input
 				ref={inputRef}
 				autoFocus

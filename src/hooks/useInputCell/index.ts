@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { REFERENCE_REGEXP } from "../../globals"
 import { GridActions } from "../../reducers/grid/actions"
@@ -7,6 +7,7 @@ import { SpreadsheetState } from "../useSpreadsheet/types"
 import { UseInputCellConfig } from "./types"
 
 export const useInputCell = (config: UseInputCellConfig) => {
+	const [showFunctionsList, setShowFunctionsList] = useState(false)
 	const { cellID, toggleEditMode } = config
 
 	let referenceMatches = []
@@ -22,7 +23,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	}
 
 	useEffect(() => {
-		watchReferences()
+		handleChange()
 	}, [])
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -42,8 +43,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const watchFunctions = () => {
 		const {inputValue, isOperation} = getInputValue()
 		if (isOperation) {
-			// Show list of functions available
-			console.log("Showing list of functions available")
+			setShowFunctionsList(true)
 		}
 	}
 
@@ -71,6 +71,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		inputRef,
 		handleUpdate,
 		inputValue,
-		handleChange
+		handleChange,
+		showFunctionsList
 	}
 }

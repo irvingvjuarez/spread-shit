@@ -12,6 +12,10 @@
 	@apply border-[0.5px] border-gray-500 min-w-[90px] relative;
 }
 
+.input-cell {
+	position: relative;
+}
+
 .cell-head {
 	@apply bg-gray-300 sticky;
 }
@@ -33,4 +37,26 @@
 
 .cell-highlighted {
 	border: 3px solid blue;
+}
+
+.functions-list {
+	position: absolute;
+	width: 90px;
+	border: 1px solid;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	border-radius: 4px;
+	top: 26px;
+	z-index: 2;
+}
+
+.functions-item {
+	padding: 2px;
+	margin-block: 2px;
+}
+
+.functions-item:hover {
+	background-color: rgb(141, 150, 166);
+	color: white;
 }
