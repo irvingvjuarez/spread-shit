@@ -1,6 +1,7 @@
 import { useInputCell } from "../../hooks/useInputCell"
 import { InputCellProps } from "./types"
 import { FunctionsList } from "../FunctionsList"
+import { ConditionalNode } from "../ConditionalNode"
 
 export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
 	const {
@@ -10,7 +11,9 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 
 	return (
 		<td className="input-cell">
-			{showFunctionsList && <FunctionsList />}
+			<ConditionalNode condition={showFunctionsList}>
+				<FunctionsList />
+			</ConditionalNode>
 
 			<input
 				ref={inputRef}
