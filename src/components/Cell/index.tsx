@@ -15,6 +15,8 @@ export const Cell: React.FC<CellProps> = ({ children, className, isHead, cellID 
 
 	return (
 		<td className={`${cellID} ${className}`} onClick={toggleEditMode}>
+			{!isHead && <span className="resize-handler"></span>}
+
 			<>
 				{children}
 			</>
