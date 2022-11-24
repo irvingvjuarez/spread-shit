@@ -25,6 +25,8 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	if (references && isOperation) {
 		computedValue = value
 		references.forEach(reference => {
+			reference = reference.toUpperCase()
+
 			const refInDeps = newState[reference].dependencies.includes(id)
 			if (!refInDeps) {
 				newState[reference].dependencies.push(id)

@@ -6,6 +6,7 @@ import { GridActions } from "../../reducers/grid/actions"
 import { InputCellProps } from "./types"
 
 export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
+	let referenceMatches = []
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
 	const inputValue = gridState[cellID || ""].rawValue
 
@@ -19,10 +20,10 @@ export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggl
 	const watchReferences = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: inputValue } = evt.target
 		if (inputValue.charAt(0) === "=") {
-			const referenceMatches = inputValue.match(REFERENCE_REGEXP) || []
+			const currentReferences = inputValue.match(REFERENCE_REGEXP) || []
 
-			if (referenceMatches.length > 0) {
-				referenceMatches.forEach(match => {
+			if (currentReferences.length > 0) {
+				currentReferences.forEach(match => {
 					const element = document.querySelector(`.${match.toUpperCase()}`)
 					element?.classList.add("cell-highlighted")
 				})
