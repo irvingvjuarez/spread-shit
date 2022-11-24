@@ -2,6 +2,7 @@ import { useCell } from "../../hooks/useCell"
 import { useGridMovement } from "../../hooks/useGridMovement"
 import { InputCell } from "../InputCell"
 import { CellProps } from "./types"
+import { ResizeHandler } from "../ResizeHandler"
 
 export const Cell: React.FC<CellProps> = ({ children, className, isHead, cellID }) => {
 	const { viewKeyCode } = useGridMovement(cellID)
@@ -15,11 +16,9 @@ export const Cell: React.FC<CellProps> = ({ children, className, isHead, cellID 
 
 	return (
 		<td className={`${cellID} ${className}`} onClick={toggleEditMode}>
-			{!isHead && <span className="resize-handler"></span>}
+			{!isHead && <ResizeHandler />}
 
-			<>
-				{children}
-			</>
+			{children}
 		</td>
 	)
 }
