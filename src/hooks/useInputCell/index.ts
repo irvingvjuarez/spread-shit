@@ -8,17 +8,17 @@ import { UseInputCellConfig } from "./types"
 
 export const useInputCell = (config: UseInputCellConfig) => {
 	const [showFunctionsList, setShowFunctionsList] = useState(false)
+	const [functionsList, setFunctionsList] = useState(FUNCTIONS_LIST)
 	const { cellID, toggleEditMode } = config
 
 	let referenceMatches = []
-	let functionsList = FUNCTIONS_LIST
 
 	const inputRef = useRef<null | HTMLInputElement>(null)
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
 	const inputValue = gridState[cellID || ""].rawValue
 
 	const getInputValue = () => {
-		const inputValue = inputRef.current?.value
+		const inputValue = inputRef.current?.value || ""
 		const isOperation = (inputValue?.charAt(0) === "=")
 
 		return { inputValue, isOperation }
@@ -44,12 +44,22 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 	const watchFunctions = () => {
 		const {inputValue, isOperation} = getInputValue()
-		if (isOperation) {
+		if (isOperation && inputValue?.length > 1) {
 			const actualInputValue = inputValue?.substring(1, inputValue.length)
-			functionsList = functionsList.filter(functionName => {
+
+			const newFunctionsList = functionsList.filter(functionName => {
 				functionName = functionName.toLowerCase()
-				return actualInputValue?.includes(functionName)
+				return functionName?.includes(actualInputValue)
 			})
+
+			console.log({actualInputValue, newFunctionsList})
+
+			if (newFunctionsList.length === 0) {
+				setShowFunctionsList(false)
+			} else if (newFunctionsList.length !== functionsList.length) {
+				if (!showFunctionsList) setShowFunctionsList(true)
+				setFunctionsList(newFunctionsList)
+			}
 		}
 
 		if (isOperation) {
