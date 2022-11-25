@@ -45,31 +45,27 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const watchFunctions = () => {
 		const {inputValue, isOperation} = getInputValue()
 		if (isOperation) {
+			setShowFunctionsList(true)
 			const actualInputValue = inputValue?.substring(1, inputValue.length)
 
 			if (actualInputValue) {
 				const newFunctionsList = FUNCTIONS_LIST.filter(functionName => {
 					functionName = functionName.toLowerCase()
-					return functionName?.includes(actualInputValue)
+					return functionName?.includes(actualInputValue.toLowerCase())
 				})
 
-				console.log({actualInputValue, newFunctionsList})
-
-				setFunctionsList(newFunctionsList)
-
-				if (functionsList.length < 1) {
+				if (newFunctionsList.length < 1) {
 					setShowFunctionsList(false)
+				} else if (newFunctionsList.length != functionsList.length) {
+					setFunctionsList(newFunctionsList)
 				}
+
 			} else {
 				setFunctionsList(FUNCTIONS_LIST)
 			}
 
 		} else {
 			setShowFunctionsList(false)
-		}
-
-		if (isOperation) {
-			setShowFunctionsList(true)
 		}
 	}
 
