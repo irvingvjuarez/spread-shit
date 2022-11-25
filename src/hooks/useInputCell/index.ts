@@ -12,7 +12,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const [functionsList, setFunctionsList] = useState(FUNCTIONS_LIST)
 	const { cellID, toggleEditMode } = config
 
-	let referenceMatches = []
+	let referenceMatches: string[] = []
 
 	const inputRef = useRef<null | HTMLInputElement>(null)
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
@@ -69,7 +69,9 @@ export const useInputCell = (config: UseInputCellConfig) => {
 			const currentReferences = inputValue?.match(REFERENCE_REGEXP) || []
 
 			if (currentReferences.length > 0) {
-				if (currentReferences.length !== referenceMatches.length) {
+				const equalReferences = currentReferences.every(ref => referenceMatches.includes(ref))
+
+				if (!equalReferences) {
 					unhighlightCells()
 				}
 
