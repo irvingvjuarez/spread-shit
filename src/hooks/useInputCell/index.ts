@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { FUNCTIONS_LIST, REFERENCE_REGEXP } from "../../globals"
 import { GridActions } from "../../reducers/grid/actions"
+import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
 import { UseInputCellConfig } from "./types"
@@ -44,28 +45,21 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 	const watchFunctions = () => {
 		const {inputValue, isOperation} = getInputValue()
+		setShowFunctionsList(isOperation)
+
 		if (isOperation) {
-			setShowFunctionsList(true)
 			const actualInputValue = inputValue?.substring(1, inputValue.length)
 
 			if (actualInputValue) {
-				const newFunctionsList = FUNCTIONS_LIST.filter(functionName => {
-					functionName = functionName.toLowerCase()
-					return functionName?.includes(actualInputValue.toLowerCase())
-				})
+				const newFunctionsList = getUpdatedFunctionsList(actualInputValue)
+				const isUpdatedListEmpty = newFunctionsList.length < 1
+				const updatedListChanged = newFunctionsList.length != functionsList.length
 
-				if (newFunctionsList.length < 1) {
-					setShowFunctionsList(false)
-				} else if (newFunctionsList.length != functionsList.length) {
-					setFunctionsList(newFunctionsList)
-				}
-
+				if (isUpdatedListEmpty)  setShowFunctionsList(false)
+				if (updatedListChanged) setFunctionsList(newFunctionsList)
 			} else {
 				setFunctionsList(FUNCTIONS_LIST)
 			}
-
-		} else {
-			setShowFunctionsList(false)
 		}
 	}
 
