@@ -48,7 +48,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 			const actualInputValue = inputValue?.substring(1, inputValue.length)
 
 			if (actualInputValue) {
-				const newFunctionsList = functionsList.filter(functionName => {
+				const newFunctionsList = FUNCTIONS_LIST.filter(functionName => {
 					functionName = functionName.toLowerCase()
 					return functionName?.includes(actualInputValue)
 				})
@@ -60,13 +60,6 @@ export const useInputCell = (config: UseInputCellConfig) => {
 				if (functionsList.length < 1) {
 					setShowFunctionsList(false)
 				}
-
-				// if (newFunctionsList.length === 0) {
-				// 	setShowFunctionsList(false)
-				// } else if (newFunctionsList.length !== functionsList.length) {
-				// 	if (!showFunctionsList) setShowFunctionsList(true)
-				// 	setFunctionsList(newFunctionsList)
-				// }
 			} else {
 				setFunctionsList(FUNCTIONS_LIST)
 			}
