@@ -1,9 +1,9 @@
-import { FUNCTIONS_LIST } from "../../globals"
+import { FunctionsListProps } from "./types"
 
-export const FunctionsList = () => {
+export const FunctionsList: React.FC<FunctionsListProps> = ({ list }) => {
 	return (
 		<ul className="functions-list">
-			{FUNCTIONS_LIST.map(item =>
+			{list.map(item =>
 				<li className="functions-item" key={item}>
 					{item}
 				</li>

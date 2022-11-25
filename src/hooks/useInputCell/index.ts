@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
-import { REFERENCE_REGEXP } from "../../globals"
+import { FUNCTIONS_LIST, REFERENCE_REGEXP } from "../../globals"
 import { GridActions } from "../../reducers/grid/actions"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
@@ -11,13 +11,15 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const { cellID, toggleEditMode } = config
 
 	let referenceMatches = []
+	let functionsList = FUNCTIONS_LIST
+
 	const inputRef = useRef<null | HTMLInputElement>(null)
 	const { dispatch, gridState } = useContext(GridContext) as SpreadsheetState
 	const inputValue = gridState[cellID || ""].rawValue
 
 	const getInputValue = () => {
-		const inputValue = inputRef.current.value
-		const isOperation = (inputValue.charAt(0) === "=")
+		const inputValue = inputRef.current?.value
+		const isOperation = (inputValue?.charAt(0) === "=")
 
 		return { inputValue, isOperation }
 	}
@@ -43,6 +45,14 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const watchFunctions = () => {
 		const {inputValue, isOperation} = getInputValue()
 		if (isOperation) {
+			const actualInputValue = inputValue?.substring(1, inputValue.length)
+			functionsList = functionsList.filter(functionName => {
+				functionName = functionName.toLowerCase()
+				return actualInputValue?.includes(functionName)
+			})
+		}
+
+		if (isOperation) {
 			setShowFunctionsList(true)
 		}
 	}
@@ -50,7 +60,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const watchReferences = () => {
 		const {inputValue, isOperation} = getInputValue()
 		if (isOperation) {
-			const currentReferences = inputValue.match(REFERENCE_REGEXP) || []
+			const currentReferences = inputValue?.match(REFERENCE_REGEXP) || []
 
 			if (currentReferences.length > 0) {
 				if (currentReferences.length !== referenceMatches.length) {
@@ -72,6 +82,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		handleUpdate,
 		inputValue,
 		handleChange,
-		showFunctionsList
+		showFunctionsList,
+		functionsList
 	}
 }
