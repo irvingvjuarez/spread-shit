@@ -17,7 +17,7 @@
 }
 
 .cell-head {
-	@apply bg-gray-300 sticky;
+	@apply bg-gray-300 sticky z-[3];
 }
 
 .resize-handler {
