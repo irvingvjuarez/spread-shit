@@ -6,6 +6,7 @@ import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
 import { UseInputCellConfig } from "./types"
+import { highlightCells } from "./utils/highlightCells"
 
 export const useInputCell = (config: UseInputCellConfig) => {
 	const [showFunctionsList, setShowFunctionsList] = useState(false)
@@ -65,23 +66,20 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 	const watchReferences = () => {
 		const {inputValue, isOperation} = getInputValue()
+
 		if (isOperation) {
 			const currentReferences = inputValue?.match(REFERENCE_REGEXP) || []
+			const referencesSameSize = currentReferences.length === referenceMatches.length
+			const referencesSameMatches = currentReferences.every(ref => referenceMatches.includes(ref))
 
-			const equalReferences = currentReferences.every(ref => referenceMatches.includes(ref))
-				&& currentReferences.length === referenceMatches.length
+			const equalReferences = referencesSameMatches && referencesSameSize
+			if (!equalReferences) unhighlightCells()
 
-			if (!equalReferences) {
-				unhighlightCells()
-			}
+			const matchesFound = currentReferences.length > 0
 
-			if (currentReferences.length > 0) {
+			if (matchesFound) {
 				referenceMatches = [...currentReferences]
-				referenceMatches.forEach(match => {
-					match = match.toUpperCase()
-					const element = document.querySelector(`.${match}`)
-					element?.classList.add("cell-highlighted")
-				})
+				highlightCells(referenceMatches)
 			}
 		}
 	}
