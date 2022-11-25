@@ -6,6 +6,7 @@ import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
 import { UseInputCellConfig } from "./types"
+import { getReferencesInfo } from "./utils/getReferencesInfo"
 import { highlightCells } from "./utils/highlightCells"
 
 export const useInputCell = (config: UseInputCellConfig) => {
@@ -68,14 +69,10 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		const {inputValue, isOperation} = getInputValue()
 
 		if (isOperation) {
-			const currentReferences = inputValue?.match(REFERENCE_REGEXP) || []
-			const referencesSameSize = currentReferences.length === referenceMatches.length
-			const referencesSameMatches = currentReferences.every(ref => referenceMatches.includes(ref))
+			const referencesInfo = getReferencesInfo({ inputValue, referenceMatches })
+			const { equalReferences, matchesFound, currentReferences } = referencesInfo
 
-			const equalReferences = referencesSameMatches && referencesSameSize
 			if (!equalReferences) unhighlightCells()
-
-			const matchesFound = currentReferences.length > 0
 
 			if (matchesFound) {
 				referenceMatches = [...currentReferences]
