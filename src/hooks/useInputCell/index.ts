@@ -68,13 +68,14 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		if (isOperation) {
 			const currentReferences = inputValue?.match(REFERENCE_REGEXP) || []
 
+			const equalReferences = currentReferences.every(ref => referenceMatches.includes(ref))
+				&& currentReferences.length === referenceMatches.length
+
+			if (!equalReferences) {
+				unhighlightCells()
+			}
+
 			if (currentReferences.length > 0) {
-				const equalReferences = currentReferences.every(ref => referenceMatches.includes(ref))
-
-				if (!equalReferences) {
-					unhighlightCells()
-				}
-
 				referenceMatches = [...currentReferences]
 				referenceMatches.forEach(match => {
 					match = match.toUpperCase()
