@@ -33,6 +33,8 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 	const handleSelectFunction = (functionName: string) => {
 		const payload = {id: cellID, content: `${inputValue}${functionName}()`}
+
+		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
 	}
 
