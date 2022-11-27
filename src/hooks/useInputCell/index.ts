@@ -36,8 +36,11 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		const payload = {id: cellID, content: value}
 
 		unhighlightCells()
-		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
+
+		setTimeout(() => {
+			toggleEditMode()
+		}, 100)
 	}
 
 	const handleChange = () => {

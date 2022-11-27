@@ -53,6 +53,7 @@
 
 .functions-item {
 	padding: 2px;
+	cursor: pointer;
 }
 
 .functions-item:hover {
