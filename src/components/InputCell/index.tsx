@@ -5,14 +5,17 @@ import { ConditionalNode } from "../ConditionalNode"
 
 export const InputCell: React.FC<InputCellProps> = ({ cellID, viewKeyCode, toggleEditMode }) => {
 	const {
-		inputRef, handleUpdate, inputValue,
+		inputRef, handleUpdate, inputValue, handleSelectFunction,
 		handleChange, showFunctionsList, functionsList
 	} = useInputCell({ cellID, toggleEditMode })
 
 	return (
 		<td className="input-cell">
 			<ConditionalNode condition={showFunctionsList}>
-				<FunctionsList list={functionsList} />
+				<FunctionsList
+					list={functionsList}
+					onSelectFunction={handleSelectFunction}
+				/>
 			</ConditionalNode>
 
 			<input

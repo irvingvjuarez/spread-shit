@@ -1,15 +1,19 @@
 import { FunctionsListProps } from "./types"
 
-export const FunctionsList: React.FC<FunctionsListProps> = ({ list }) => {
-	const handleClick = () => {
-		console.log("Hi")
+export const FunctionsList: React.FC<FunctionsListProps> = ({ list, onSelectFunction }) => {
+	const selectFunction = (name: string) => () => {
+		onSelectFunction(name)
 	}
 
 	return (
 		<ul className="functions-list">
-			{list.map(item =>
-				<li onClick={handleClick} className="functions-item" key={item}>
-					{item}
+			{list.map(functionName =>
+				<li
+					onClick={selectFunction(functionName)}
+					className="functions-item"
+					key={functionName}
+				>
+					{functionName}
 				</li>
 			)}
 		</ul>

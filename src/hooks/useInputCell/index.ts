@@ -31,6 +31,11 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		handleChange()
 	}, [])
 
+	const handleSelectFunction = (functionName: string) => {
+		const payload = {id: cellID, content: `${inputValue}${functionName}()`}
+		dispatch({ type: GridActions.update, payload })
+	}
+
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		const value = evt.target.value.replaceAll(REFERENCE_REGEXP, (match) => match.toUpperCase())
 		const payload = {id: cellID, content: value}
@@ -40,7 +45,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 		setTimeout(() => {
 			toggleEditMode()
-		}, 100)
+		}, 0)
 	}
 
 	const handleChange = () => {
@@ -90,6 +95,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		inputValue,
 		handleChange,
 		showFunctionsList,
-		functionsList
+		functionsList,
+		handleSelectFunction
 	}
 }
