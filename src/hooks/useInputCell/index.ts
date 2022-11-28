@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
 import { FUNCTIONS_LIST, REFERENCE_REGEXP } from "../../globals"
 import { GridActions } from "../../reducers/grid/actions"
+import { clickCell } from "../../services/clickCell"
 import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
@@ -37,11 +38,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
-
-		setTimeout(() => {
-			const cellElement = document.querySelector(`.${cellID}`)
-			cellElement?.click()
-		}, 0)
+		setTimeout(() => clickCell(cellID as string), 0)
 	}
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
