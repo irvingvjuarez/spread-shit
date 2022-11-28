@@ -37,6 +37,11 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 		toggleEditMode()
 		dispatch({ type: GridActions.update, payload })
+
+		setTimeout(() => {
+			const cellElement = document.querySelector(`.${cellID}`)
+			cellElement?.click()
+		}, 0)
 	}
 
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
