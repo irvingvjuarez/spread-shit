@@ -1,5 +1,5 @@
 import { GridContent } from "../hooks/useSpreadsheet/types";
-import { referenceRegexp } from "../regexps"
+import { referenceRegexp, functionRegexp } from "../regexps"
 import { UpdatePayload } from "../types";
 
 type UpdateGridConfig = {
@@ -21,6 +21,9 @@ const getNewValues = (config: GetNewValuesConfig) => {
 
 	const isOperation = value.charAt(0) === "="
 	const references: string[] | null = value.match(referenceRegexp)
+	const functionMatches = value.match(functionRegexp)
+
+	console.log({value, functionMatches})
 
 	if (references && isOperation) {
 		computedValue = value
