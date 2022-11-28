@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { GridContext } from "../../contexts/GridContext"
-import { FUNCTIONS_LIST, REFERENCE_REGEXP } from "../../globals"
+import { FUNCTIONS_LISTNAMES, REFERENCE_REGEXP } from "../../globals"
 import { GridActions } from "../../reducers/grid/actions"
 import { clickCell } from "../../services/clickCell"
 import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
@@ -13,7 +13,7 @@ import { highlightCells } from "./utils/highlightCells"
 
 export const useInputCell = (config: UseInputCellConfig) => {
 	const [showFunctionsList, setShowFunctionsList] = useState(false)
-	const [functionsList, setFunctionsList] = useState(FUNCTIONS_LIST)
+	const [functionsList, setFunctionsList] = useState(FUNCTIONS_LISTNAMES)
 	const { cellID, toggleEditMode } = config
 
 	let referenceMatches: string[] = []
@@ -74,7 +74,7 @@ export const useInputCell = (config: UseInputCellConfig) => {
 				if (isUpdatedListEmpty)  setShowFunctionsList(false)
 				if (updatedListChanged) setFunctionsList(newFunctionsList)
 			} else {
-				setFunctionsList(FUNCTIONS_LIST)
+				setFunctionsList(FUNCTIONS_LISTNAMES)
 			}
 		}
 	}
