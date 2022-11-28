@@ -45,6 +45,11 @@ export const useInputCell = (config: UseInputCellConfig) => {
 		unhighlightCells()
 		dispatch({ type: GridActions.update, payload })
 
+		const functionItems = [...document.querySelectorAll(".functions-item")]
+		const itemsOnHover = functionItems.filter(item => item.matches(":hover"))
+
+		console.log({functionItems, itemsOnHover})
+
 		setTimeout(() => {
 			toggleEditMode()
 		}, 0)
