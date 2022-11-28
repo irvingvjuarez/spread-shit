@@ -6,6 +6,7 @@ import { getUpdatedFunctionsList } from "../../services/getUpdatedFunctionsList"
 import { unhighlightCells } from "../../services/unhighlightCells"
 import { SpreadsheetState } from "../useSpreadsheet/types"
 import { UseInputCellConfig } from "./types"
+import { functionItemSelected } from "./utils/functionItemSelected"
 import { getReferencesInfo } from "./utils/getReferencesInfo"
 import { highlightCells } from "./utils/highlightCells"
 
@@ -41,18 +42,14 @@ export const useInputCell = (config: UseInputCellConfig) => {
 	const handleUpdate = (evt: React.FocusEvent<HTMLInputElement, Element>) => {
 		const value = evt.target.value.replaceAll(REFERENCE_REGEXP, (match) => match.toUpperCase())
 		const payload = {id: cellID, content: value}
+		const { itemSelected } = functionItemSelected()
 
 		unhighlightCells()
 		dispatch({ type: GridActions.update, payload })
 
-		const functionItems = [...document.querySelectorAll(".functions-item")]
-		const itemsOnHover = functionItems.filter(item => item.matches(":hover"))
-
-		console.log({functionItems, itemsOnHover})
-
-		setTimeout(() => {
+		if(!itemSelected) {
 			toggleEditMode()
-		}, 0)
+		}
 	}
 
 	const handleChange = () => {
