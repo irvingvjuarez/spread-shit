@@ -24,7 +24,7 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	const references: string[] | null = value.match(referenceRegexp)
 	const functionMatches = value.match(functionRegexp)
 
-	if (functionMatches){
+	if (functionMatches && isOperation){
 		const functionID = value.match(functionTypeRegexp)?.[0];
 		const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
 
@@ -41,10 +41,8 @@ const getNewValues = (config: GetNewValuesConfig) => {
 		cellsArr = cellsArr.map(cell => Number(cell.computedValue))
 		const functionResult = functionObj?.fn(cellsArr)
 
-		console.log({ functionResult })
-	}
-
-	if (references && isOperation) {
+		computedValue = String(functionResult)
+	} else if (references && isOperation) {
 		computedValue = value
 		references.forEach(reference => {
 			reference = reference.toUpperCase()
