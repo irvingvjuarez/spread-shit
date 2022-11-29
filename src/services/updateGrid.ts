@@ -32,13 +32,16 @@ const getNewValues = (config: GetNewValuesConfig) => {
 		const from = references?.[0].substring(1, references?.[0].length)
 		const to = references?.[1].substring(1, references?.[1].length)
 
-		const cellsArr = [];
+		let cellsArr = [];
 		for(let i = Number(from); i <= Number(to); i++){
 			const currentCellID = columnID + String(i)
 			cellsArr.push(state[currentCellID])
 		}
 
-		console.log({ cellsArr })
+		cellsArr = cellsArr.map(cell => Number(cell.computedValue))
+		const functionResult = functionObj?.fn(cellsArr)
+
+		console.log({ functionResult })
 	}
 
 	if (references && isOperation) {
