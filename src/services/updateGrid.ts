@@ -1,18 +1,12 @@
 import { FUNCTIONS_LIST } from "../globals";
 import { GridContent } from "../hooks/useSpreadsheet/types";
 import { referenceRegexp, functionRegexp, functionTypeRegexp } from "../regexps"
-import { UpdatePayload } from "../types";
+import { GetNewValuesConfig, UpdatePayload } from "../types";
+import { updateDependencies } from "./updateDependencies"
 
 type UpdateGridConfig = {
 	payload: unknown;
 	state: GridContent
-}
-
-type GetNewValuesConfig = {
-	value: string;
-	newState: GridContent;
-	id: string;
-	state: GridContent;
 }
 
 const getNewValues = (config: GetNewValuesConfig) => {
@@ -93,18 +87,7 @@ export const updateGrid = (config: UpdateGridConfig) => {
 	newState[id].computedValue = String(computedValue)
 
 	if (newState[id].dependencies.length > 0) {
-		newState[id].dependencies.forEach(dep => {
-			const depValue = state[dep].rawValue
-			const { rawValue: depRaw, computedValue: depComputed } = getNewValues({
-				value: depValue,
-				id: dep,
-				newState,
-				state
-			})
-
-			newState[dep].rawValue = depRaw
-			newState[dep].computedValue = String(depComputed)
-		})
+		newState[id] = updateDependencies({ newState, id, state, getNewValues })
 	}
 
 	return newState
