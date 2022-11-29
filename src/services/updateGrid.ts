@@ -1,5 +1,6 @@
+import { FUNCTIONS_LIST } from "../globals";
 import { GridContent } from "../hooks/useSpreadsheet/types";
-import { referenceRegexp, functionRegexp } from "../regexps"
+import { referenceRegexp, functionRegexp, functionTypeRegexp } from "../regexps"
 import { UpdatePayload } from "../types";
 
 type UpdateGridConfig = {
@@ -23,7 +24,22 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	const references: string[] | null = value.match(referenceRegexp)
 	const functionMatches = value.match(functionRegexp)
 
-	console.log({value, functionMatches})
+	if (functionMatches){
+		const functionID = value.match(functionTypeRegexp)?.[0];
+		const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
+
+		const columnID = references?.[0].substring(0,1)
+		const from = references?.[0].substring(1, references?.[0].length)
+		const to = references?.[1].substring(1, references?.[1].length)
+
+		const cellsArr = [];
+		for(let i = Number(from); i <= Number(to); i++){
+			const currentCellID = columnID + String(i)
+			cellsArr.push(state[currentCellID])
+		}
+
+		console.log({ cellsArr })
+	}
 
 	if (references && isOperation) {
 		computedValue = value
