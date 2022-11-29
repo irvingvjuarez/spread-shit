@@ -33,13 +33,25 @@ const getNewValues = (config: GetNewValuesConfig) => {
 		const to = references?.[1].substring(1, references?.[1].length)
 
 		let cellsArr = [];
+		const cellReferences = []
+
 		for(let i = Number(from); i <= Number(to); i++){
 			const currentCellID = columnID + String(i)
+			cellReferences.push(currentCellID)
 			cellsArr.push(state[currentCellID])
 		}
 
 		cellsArr = cellsArr.map(cell => Number(cell.computedValue))
 		const functionResult = functionObj?.fn(cellsArr)
+
+		cellReferences.forEach(reference => {
+			reference = reference.toUpperCase()
+
+			const refInDeps = newState[reference].dependencies.includes(id)
+			if (!refInDeps) {
+				newState[reference].dependencies.push(id)
+			}
+		})
 
 		computedValue = String(functionResult)
 	} else if (references && isOperation) {
