@@ -26,6 +26,14 @@ export const updateDependencies = (config: UpdateDependenciesConfig) => {
 
 		newState[dep].rawValue = depRaw
 		newState[dep].computedValue = String(depComputed)
+
+		const recursiveUpdating = newState[dep].dependencies.length > 0
+		if(recursiveUpdating){
+			newState[dep] = updateDependencies({
+				...config,
+				id: dep
+			})
+		}
 	})
 
 	return currentCell
