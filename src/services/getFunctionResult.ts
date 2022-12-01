@@ -13,6 +13,11 @@ export const getFunctionResult = (config: GetFunctionResultConfig) => {
 	const { match, state, newState, id } = config
 
 	const functionMatchReferences = match.match(REFERENCE_REGEXP)
+	const firstReferenceColumn = functionMatchReferences?.[0].substring(0,1)
+	const secondReferenceColumn = functionMatchReferences?.[1].substring(0,1)
+	const sameColumn = firstReferenceColumn === secondReferenceColumn
+
+	if (!sameColumn) return "Hi"
 
 	const functionID = match.match(FUNCTION_TYPE_REGEXP)?.[0];
 	const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
