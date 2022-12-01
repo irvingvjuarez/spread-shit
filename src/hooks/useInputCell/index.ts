@@ -84,11 +84,19 @@ export const useInputCell = (config: UseInputCellConfig) => {
 
 		if (isOperation) {
 			const referencesInfo = getReferencesInfo({ inputValue, referenceMatches })
-			const { equalReferences, matchesFound, currentReferences } = referencesInfo
+			const {
+				equalReferences,
+				matchesFound,
+				currentReferences,
+				isFunction,
+				functionMatchesReferences
+			} = referencesInfo
 
 			if (!equalReferences) unhighlightCells()
 
-			if (matchesFound) {
+			if (isFunction) {
+				highlightCells(functionMatchesReferences)
+			} else if (matchesFound) {
 				referenceMatches = [...currentReferences]
 				highlightCells(referenceMatches)
 			}

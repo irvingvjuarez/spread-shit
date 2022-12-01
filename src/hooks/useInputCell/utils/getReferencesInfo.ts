@@ -6,7 +6,7 @@ export const getReferencesInfo = (config: GetReferencesIntoConfig) => {
 	const {inputValue, referenceMatches} = config
 
 	// functions info
-	const functionMatchesReferences = []
+	const functionMatchesReferences: string[] = []
 	const functionMatches = inputValue.match(FUNCTION_REGEXP) || []
 	const isFunction = functionMatches.length > 0;
 	if (isFunction) {
@@ -15,8 +15,19 @@ export const getReferencesInfo = (config: GetReferencesIntoConfig) => {
 			const from = matchReferences?.[0]
 			const to = matchReferences?.[1]
 			const matchColumn = from?.substring(0,1) === to?.substring(0,1) ? to?.substring(0,1) : null
-			const matchConfig = { matchColumn, from, to }
-			console.log(matchConfig)
+			// const matchConfig = { matchColumn, from, to }
+
+			if (matchColumn) {
+				const fromNumber = Number(from?.substring(1, from.length))
+				const toNumber = Number(to?.substring(1, to.length))
+				for (let i = fromNumber; i <= toNumber; i++) {
+					const cellID = `${matchColumn}${i}`
+					const cellIdInReferences = functionMatchesReferences.includes(cellID)
+					if (!cellIdInReferences) {
+						functionMatchesReferences.push(cellID)
+					}
+				}
+			}
 		})
 	}
 
@@ -30,6 +41,8 @@ export const getReferencesInfo = (config: GetReferencesIntoConfig) => {
 	return {
 		equalReferences,
 		matchesFound,
-		currentReferences
+		currentReferences,
+		isFunction,
+		functionMatchesReferences
 	}
 }
