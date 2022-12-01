@@ -26,8 +26,10 @@ const getNewValues = (config: GetNewValuesConfig) => {
 			state,
 			newState
 		}))
-	} else if (references && isOperation) {
-		computedValue = value
+	}
+
+	if (references && isOperation) {
+		computedValue = functionMatches ? computedValue : value
 		references.forEach(reference => {
 			reference = reference.toUpperCase()
 
