@@ -1,6 +1,6 @@
 import { FUNCTIONS_LIST } from "../globals";
 import { GridContent } from "../hooks/useSpreadsheet/types";
-import { referenceRegexp, functionRegexp, functionTypeRegexp } from "../regexps"
+import { REFERENCE_REGEXP, FUNCTION_REGEXP, FUNCTION_TYPE_REGEXP } from "../regexps"
 import { GetNewValuesConfig, UpdatePayload } from "../types";
 import { getFunctionResult } from "./getFunctionResult";
 import { updateDependencies } from "./updateDependencies"
@@ -16,11 +16,11 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	value = value.trim()
 
 	const isOperation = value.charAt(0) === "="
-	const references: string[] | null = value.match(referenceRegexp)
-	const functionMatches = value.match(functionRegexp)
+	const references: string[] | null = value.match(REFERENCE_REGEXP)
+	const functionMatches = value.match(FUNCTION_REGEXP)
 
 	if (functionMatches && isOperation){
-		computedValue = value.replaceAll(functionRegexp, (match) => getFunctionResult({
+		computedValue = value.replaceAll(FUNCTION_REGEXP, (match) => getFunctionResult({
 			match,
 			id,
 			state,

@@ -1,6 +1,6 @@
 import { FUNCTIONS_LIST } from "../globals";
 import { GridContent } from "../hooks/useSpreadsheet/types";
-import { functionTypeRegexp, referenceRegexp } from "../regexps";
+import { FUNCTION_TYPE_REGEXP, REFERENCE_REGEXP } from "../regexps";
 
 type GetFunctionResultConfig = {
 	match: string;
@@ -12,9 +12,9 @@ type GetFunctionResultConfig = {
 export const getFunctionResult = (config: GetFunctionResultConfig) => {
 	const { match, state, newState, id } = config
 
-	const functionMatchReferences = match.match(referenceRegexp)
+	const functionMatchReferences = match.match(REFERENCE_REGEXP)
 
-	const functionID = match.match(functionTypeRegexp)?.[0];
+	const functionID = match.match(FUNCTION_TYPE_REGEXP)?.[0];
 	const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
 
 	const columnID = functionMatchReferences?.[0].substring(0,1)
