@@ -42,5 +42,5 @@ export const getFunctionResult = (config: GetFunctionResultConfig) => {
 		}
 	})
 
-	return functionResult
+	return String(functionResult)
 }

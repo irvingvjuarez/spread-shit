@@ -20,17 +20,12 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	const functionMatches = value.match(functionRegexp)
 
 	if (functionMatches && isOperation){
-		let functionResult
-		functionMatches.forEach(match => {
-			functionResult = getFunctionResult({
-				match,
-				id,
-				state,
-				newState
-			})
-		})
-
-		computedValue = String(functionResult)
+		computedValue = value.replaceAll(functionRegexp, (match) => getFunctionResult({
+			match,
+			id,
+			state,
+			newState
+		}))
 	} else if (references && isOperation) {
 		computedValue = value
 		references.forEach(reference => {
