@@ -21,12 +21,14 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	if (functionMatches && isOperation){
 		let functionResult
 		functionMatches.forEach(match => {
+			const functionMatchReferences = match.match(referenceRegexp)
+
 			const functionID = match.match(functionTypeRegexp)?.[0];
 			const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
 
-			const columnID = references?.[0].substring(0,1)
-			const from = references?.[0].substring(1, references?.[0].length)
-			const to = references?.[1].substring(1, references?.[1].length)
+			const columnID = functionMatchReferences?.[0].substring(0,1)
+			const from = functionMatchReferences?.[0].substring(1, functionMatchReferences?.[0].length)
+			const to = functionMatchReferences?.[1].substring(1, functionMatchReferences?.[1].length)
 
 			let cellsArr = [];
 			const cellReferences = []
