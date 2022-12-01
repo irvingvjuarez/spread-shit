@@ -30,7 +30,7 @@ export const moveInGrid = (currentID: string, movement: GridMovements) => {
 
 	try {
 		const newClassname = currentID?.replace(replaceable, newValue) as string
-		const nextCell = document.querySelector("." + newClassname)
+		const nextCell: HTMLTableCellElement | null = document.querySelector("." + newClassname)
 
 		if(nextCell) {
 			nextCell.click()

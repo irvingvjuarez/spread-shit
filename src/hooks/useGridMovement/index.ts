@@ -28,7 +28,7 @@ export const useGridMovement = (cellID: string | undefined) => {
 		const keyValue = evt.key;
 		const {
 			isTab, isEnter, isShift, isReverseTab, isValidMovement
-		} = getNextMovement(keyValue, keyRecord, evt.target.value)
+		} = getNextMovement(keyValue, keyRecord, (evt.target as HTMLInputElement).value)
 		if (isTab) evt.preventDefault()
 
 		if (isEnter) moveInGrid(cellID as string, "ArrowDown")
