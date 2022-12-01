@@ -19,32 +19,35 @@ const getNewValues = (config: GetNewValuesConfig) => {
 	const functionMatches = value.match(functionRegexp)
 
 	if (functionMatches && isOperation){
-		const functionID = value.match(functionTypeRegexp)?.[0];
-		const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
+		let functionResult
+		functionMatches.forEach(match => {
+			const functionID = match.match(functionTypeRegexp)?.[0];
+			const functionObj = FUNCTIONS_LIST.find(item => item.name === functionID)
 
-		const columnID = references?.[0].substring(0,1)
-		const from = references?.[0].substring(1, references?.[0].length)
-		const to = references?.[1].substring(1, references?.[1].length)
+			const columnID = references?.[0].substring(0,1)
+			const from = references?.[0].substring(1, references?.[0].length)
+			const to = references?.[1].substring(1, references?.[1].length)
 
-		let cellsArr = [];
-		const cellReferences = []
+			let cellsArr = [];
+			const cellReferences = []
 
-		for(let i = Number(from); i <= Number(to); i++){
-			const currentCellID = columnID + String(i)
-			cellReferences.push(currentCellID)
-			cellsArr.push(state[currentCellID])
-		}
-
-		cellsArr = cellsArr.map(cell => Number(cell.computedValue))
-		const functionResult = functionObj?.fn(cellsArr)
-
-		cellReferences.forEach(reference => {
-			reference = reference.toUpperCase()
-
-			const refInDeps = newState[reference].dependencies.includes(id)
-			if (!refInDeps) {
-				newState[reference].dependencies.push(id)
+			for(let i = Number(from); i <= Number(to); i++){
+				const currentCellID = columnID + String(i)
+				cellReferences.push(currentCellID)
+				cellsArr.push(state[currentCellID])
 			}
+
+			cellsArr = cellsArr.map(cell => Number(cell.computedValue))
+			functionResult = functionObj?.fn(cellsArr)
+
+			cellReferences.forEach(reference => {
+				reference = reference.toUpperCase()
+
+				const refInDeps = newState[reference].dependencies.includes(id)
+				if (!refInDeps) {
+					newState[reference].dependencies.push(id)
+				}
+			})
 		})
 
 		computedValue = String(functionResult)
